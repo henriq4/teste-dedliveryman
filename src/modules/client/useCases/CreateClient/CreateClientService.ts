@@ -18,9 +18,7 @@ class CreateClientService {
 
     const clientExists = await prisma.client.findFirst({
       where: {
-        username: {
-          mode: "insensitive"
-        }
+        username,
       }
     })
 
@@ -31,6 +29,11 @@ class CreateClientService {
     const hashPassword = await hash(password, 10)
 
     const client = await prisma.client.create({
+      select: {
+	      id: true,
+        username: true,
+        password: true
+      },
       data: {
         username,
         password: hashPassword,
