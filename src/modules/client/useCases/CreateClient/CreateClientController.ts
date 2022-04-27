@@ -3,12 +3,12 @@ import { CreateClientService } from "./CreateClientService";
 
 class CreateClientController {
 
-  handle(request: Request, response: Response) {
+  async handle(request: Request, response: Response) {
     const { username, password } = request.body
 
     const createClientService = new CreateClientService()
 
-    const client = createClientService.execute({ username, password })
+    const client = await createClientService.execute({ username, password })
 
     return response.status(200).json(client)
   }
